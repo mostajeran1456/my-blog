@@ -27,7 +27,12 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>
-                    <a href="{{route("user.edit",$user->id)}}" class="btn btn-warning rounded">edit</a>
+                    <form action="{{route("user.destroy",$user->id)}}" method="post">
+                        <a href="{{route("user.edit",$user->id)}}" class="btn btn-warning rounded">edit</a>
+                        @method("delete")
+                        @csrf
+                        <input type="submit" value="Delete" class="btn btn-danger rounded">
+                    </form>
                 </td>
             </tr>
         @endforeach

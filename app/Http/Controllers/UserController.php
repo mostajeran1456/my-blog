@@ -64,7 +64,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -100,11 +100,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return Response
+     * @param User $user
+     * @return Application|Redirector|RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect(route("user.index"))->with("msg", "user deleted successfully");
     }
 }
