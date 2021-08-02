@@ -17,6 +17,7 @@
             <th>id</th>
             <th>name</th>
             <th>email</th>
+            <th>manage</th>
         </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                 <td>{{$user->id}}</td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
+                <td>
+                    <a href="{{route("user.edit",$user->id)}}" class="btn btn-warning rounded">edit</a>
+                </td>
             </tr>
         @endforeach
         </tbody>

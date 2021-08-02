@@ -6,8 +6,10 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class UserController extends Controller
 {
@@ -39,7 +41,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -51,7 +53,7 @@ class UserController extends Controller
 
         User::create($valid);
 
-        return redirect(route("user.index"))->with("msg","user created successfully");
+        return redirect(route("user.index"))->with("msg", "user created successfully");
     }
 
     /**
@@ -68,12 +70,12 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param User $user
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view("user.edit", compact("user"));
     }
 
     /**
@@ -81,11 +83,18 @@ class UserController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $valid = $request->validate([
+            "name" => ["required"],
+            "password" => ["required", "min:5"],
+            "email" => ["required", "email"],
+        ]);
+
+        $user->update($valid);
+        return redirect(route("user.index"))->with("msg", "user updated successfully");
     }
 
     /**
