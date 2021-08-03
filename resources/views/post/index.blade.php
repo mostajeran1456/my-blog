@@ -1,34 +1,34 @@
 @extends("layout.master")
 
-@section("ex-title","user list")
+@section("ex-title","Posts")
 
 @section("content")
     @if(Session()->has("msg"))
-        <div class="alert alert-success">
+        <div class="alert alert-success" xmlns="">
             <p>{{Session()->get("msg")}}</p>
         </div>
     @endif
     <div class="row mx-auto">
-        <a href="{{route("user.create")}}" class="btn btn-success rounded">Create new user</a>
+        <a href="{{route("post.create")}}" class="btn btn-success rounded">Create new Post</a>
     </div>
     <table class="table table-border table-hover table-striped">
         <thead>
         <tr>
             <th>id</th>
-            <th>name</th>
-            <th>email</th>
+            <th>Author</th>
+            <th>title</th>
             <th>manage</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($users as $user)
+        @foreach($posts as $post)
             <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->post->title}}</td>
-                <td>{{$user->email}}</td>
+                <td>{{$post->id}}</td>
+                <td>{{$post->user->name}}</td>
+                <td>{{$post->title}}</td>
                 <td>
-                    <form action="{{route("user.destroy",$user->id)}}" method="post">
-                        <a href="{{route("user.edit",$user->id)}}" class="btn btn-warning rounded">edit</a>
+                    <form action="{{route("user.destroy",$post->id)}}" method="post">
+                        <a href="{{route("user.edit",$post->id)}}" class="btn btn-warning rounded">edit</a>
                         @method("delete")
                         @csrf
                         <input type="submit" value="Delete" class="btn btn-danger rounded">
@@ -38,4 +38,8 @@
         @endforeach
         </tbody>
     </table>
+
+    <script>
+        console.log({!! json_encode(\Illuminate\Support\Facades\DB::getQueryLog()) !!})
+    </script>
 @endsection

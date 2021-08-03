@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MyblogController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,8 @@ Route::group(["prefix" => "ads"], function () {
 //Route::get("user/{user}",[MyblogController::class,"index"]);
 
 Route::resource("user", UserController::class);
+Route::resource("post", PostController::class)->middleware("auth");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
