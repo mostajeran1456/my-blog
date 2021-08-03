@@ -7,7 +7,7 @@
         This is second page 😂
 
         {{$user->email}}
-
+        <input type="text" name="{{\App\Models\Post::TITLE}}">
         <ul>
             @foreach(["reza","ali","ahan_melal"] as $item)
                 <li>{{$item}}</li>
